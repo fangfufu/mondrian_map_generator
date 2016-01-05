@@ -1,4 +1,4 @@
-function [ mondrian_map, shadow_map ] = gen_mondrian( size_y, size_x, ...
+function [ mondrian_map, edge_map ] = gen_mondrian( size_y, size_x, ...
     region_count, bright_spectra, shadow_spectra, reflectance, ...
     camera_response)
 % GEN_MONDRIAN Generate a mondrian image - with the ability to add shadow
@@ -36,6 +36,7 @@ c_table = zeros(size(reflectance, 2)*2, 3);
 % we basically add the shadow map onto the region map, so the shadowed
 % colour will be indexed
 shadow_map = gen_shadow_map(size_y, size_x) * colour_count;
+edge_map = edge(shadow_map, 'canny');
 region_map = region_map + shadow_map;
 
 %% Precompute colours
